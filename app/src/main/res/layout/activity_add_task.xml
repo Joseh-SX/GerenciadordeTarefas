@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/edtTitle"
+        android:hint="Título"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/edtDescription"
+        android:hint="Descrição"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:id="@+id/edtDueDate"
+        android:hint="Prazo (ex: 2025-07-01)"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:text="Salvar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>

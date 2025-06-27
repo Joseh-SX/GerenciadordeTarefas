@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/taskActivityLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TaskActivity">
+
+    <ListView
+        android:id="@+id/listViewTasks"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomBar"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp" />
+
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:gravity="center"
+        android:background="#EEEEEE">
+
+        <Button
+            android:id="@+id/btnAddTask"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Adicionar" />
+
+        <Button
+            android:id="@+id/btnSettings"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Configurações" />
+    </LinearLayout>
+</RelativeLayout>
