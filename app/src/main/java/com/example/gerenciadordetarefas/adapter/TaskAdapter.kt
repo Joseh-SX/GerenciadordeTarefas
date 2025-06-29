@@ -33,15 +33,15 @@ class TaskAdapter(
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = taskList[position]
 
-        // Exibe o título da tarefa e a data de vencimento
-        holder.txtTarefa.text = "${task.title} - Prioridade: ${task.priority} - ${task.dueDate}"
+        // Texto mostrando título, status, prioridade e data de vencimento
+        holder.txtTarefa.text = "${task.title} - Status: ${task.status} - Prioridade: ${task.priority} - ${task.dueDate}"
 
-        // Clicando em qualquer parte do item → abre para edição
+        // Clique para editar
         holder.itemView.setOnClickListener {
             onItemClick(task)
         }
 
-        // Botão para excluir a tarefa
+        // Clique no botão excluir
         holder.btnExcluir.setOnClickListener {
             onExcluir(task)
         }

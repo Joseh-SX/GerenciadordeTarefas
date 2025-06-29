@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Gerenciador de Tarefas</string>
+    <string-array name="status_options">
+        <item>Pendente</item>
+        <item>Em andamento</item>
+        <item>Concluída</item>
+    </string-array>
 </resources>

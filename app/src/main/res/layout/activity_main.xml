@@ -6,9 +6,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp"
+        android:textStyle="bold"
         tools:context=".MainActivity">
 
-        <TextView
+
+    <TextView
             android:id="@+id/textTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,6 +22,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:fontFamily="@font/montserrat_lightitalic"
             android:text="Título - Prioridade(0-5) - Prazo" />
 
         <!-- Lista de tarefas (temporária com TextViews fixos) -->
@@ -32,6 +36,7 @@
                 android:id="@+id/recyclerTarefas"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textSize="16sp"
                 android:padding="16dp"/>
         </ScrollView>
 
@@ -47,12 +52,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Configurações"
+                android:textSize="14sp"
                 android:layout_marginEnd="8dp"/>
 
             <Button
                 android:id="@+id/btnAdicionar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="14sp"
                 android:text="Adicionar" />
         </LinearLayout>
 

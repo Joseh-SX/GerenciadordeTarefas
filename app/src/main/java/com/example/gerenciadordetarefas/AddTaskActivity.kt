@@ -11,7 +11,7 @@ import java.util.*
 
 class AddTaskActivity : AppCompatActivity() {
 
-    // Variável para armazenar ID da tarefa (caso esteja editando)
+    // Variável para armazenar o ID da tarefa (em caso de edição)
     private var taskId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,22 +22,29 @@ class AddTaskActivity : AppCompatActivity() {
         val edtTitle = findViewById<EditText>(R.id.edtTitle)
         val edtDescription = findViewById<EditText>(R.id.edtDescription)
         val edtDueDate = findViewById<EditText>(R.id.edtDueDate)
-        val ratingBarPriority = findViewById<RatingBar>(R.id.ratingBarPriority) // Novo: RatingBar para prioridade
-        val edtStatus = findViewById<EditText>(R.id.edtStatus)
+        val ratingBarPriority = findViewById<RatingBar>(R.id.ratingBarPriority)
+        val spinnerStatus = findViewById<Spinner>(R.id.spinnerStatus)
         val edtNotes = findViewById<EditText>(R.id.edtNotes)
         val btnSave = findViewById<Button>(R.id.btnSave)
 
-        // Aplica a máscara para digitação da data (você pode implementar essa função)
+        // Cria o adapter para o Spinner (com os valores do array XML)
+        val adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.status_options,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerStatus.adapter = adapter
+
+        // Aplica máscara de data no campo de data
         applyDateMask(edtDueDate)
 
-        // Abre o calendário ao clicar no campo de data
+        // Mostra o DatePicker ao clicar no campo de data
         edtDueDate.setOnClickListener {
             val calendar = Calendar.getInstance()
-
             val datePicker = DatePickerDialog(
                 this,
                 { _, year, month, dayOfMonth ->
-                    // Formata a data como dd/MM/yyyy e seta no campo
                     val formatted = "%02d/%02d/%04d".format(dayOfMonth, month + 1, year)
                     edtDueDate.setText(formatted)
                 },
@@ -48,39 +55,42 @@ class AddTaskActivity : AppCompatActivity() {
             datePicker.show()
         }
 
-        // Banco de dados
+        // Instância do banco de dados
         val dbHelper = TaskDatabaseHelper(this)
 
-        // Verifica se recebeu uma tarefa para edição (ID vem pela Intent)
+        // Recupera o ID da tarefa (se estiver em modo de edição)
         taskId = intent.getIntExtra("taskId", -1).takeIf { it != -1 }
 
         if (taskId != null) {
-            // Busca a tarefa no banco pelo ID
+            // Se o ID foi passado, carrega a tarefa do banco e preenche os campos
             val task = dbHelper.getTaskById(taskId!!)
             if (task != null) {
-                // Preenche os campos com os dados da tarefa existente
                 edtTitle.setText(task.title)
                 edtDescription.setText(task.description)
                 edtDueDate.setText(task.dueDate)
-                edtStatus.setText(task.status)
                 edtNotes.setText(task.notes)
 
-                // Define a prioridade no RatingBar (converter string para float)
+                // Define a seleção correta do status no Spinner
+                val statusIndex = adapter.getPosition(task.status)
+                spinnerStatus.setSelection(statusIndex)
+
+                // Define a prioridade no RatingBar
                 val priorityInt = task.priority.toIntOrNull() ?: 0
                 ratingBarPriority.rating = priorityInt.toFloat()
             }
         }
 
-        // Ação do botão Salvar
+        // Ação do botão "Salvar"
         btnSave.setOnClickListener {
+            // Lê os valores dos campos
             val title = edtTitle.text.toString().trim()
             val description = edtDescription.text.toString().trim()
             val dueDate = edtDueDate.text.toString().trim()
-            val status = edtStatus.text.toString().trim()
+            val status = spinnerStatus.selectedItem.toString()
             val notes = edtNotes.text.toString().trim()
-            val priorityValue = ratingBarPriority.rating.toInt() // Pega o valor do RatingBar como Int
+            val priorityValue = ratingBarPriority.rating.toInt()
 
-            // Validação simples: título e prazo obrigatórios
+            // Validação básica: título e prazo são obrigatórios
             if (title.isEmpty() || dueDate.isEmpty()) {
                 Toast.makeText(this, "Título e prazo são obrigatórios", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -89,13 +99,13 @@ class AddTaskActivity : AppCompatActivity() {
             val now = getCurrentTimestamp()
 
             if (taskId == null) {
-                // Criação de nova tarefa
+                // Criando uma nova tarefa
                 val newTask = Task(
                     title = title,
                     description = description,
                     dueDate = dueDate,
                     status = status,
-                    priority = priorityValue.toString(), // Salva prioridade como string
+                    priority = priorityValue.toString(),
                     notes = notes,
                     createdAt = now,
                     updatedAt = now
@@ -108,16 +118,16 @@ class AddTaskActivity : AppCompatActivity() {
                     Toast.makeText(this, "Erro ao salvar tarefa", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                // Atualização de tarefa existente
+                // Atualizando uma tarefa existente
                 val updatedTask = Task(
                     id = taskId!!,
                     title = title,
                     description = description,
                     dueDate = dueDate,
                     status = status,
-                    priority = priorityValue.toString(), // Atualiza prioridade
+                    priority = priorityValue.toString(),
                     notes = notes,
-                    createdAt = dbHelper.getTaskById(taskId!!)?.createdAt ?: now, // Mantém data original
+                    createdAt = dbHelper.getTaskById(taskId!!)?.createdAt ?: now,
                     updatedAt = now
                 )
                 val success = dbHelper.updateTask(updatedTask)
@@ -131,16 +141,14 @@ class AddTaskActivity : AppCompatActivity() {
         }
     }
 
-    // Função para obter timestamp atual formatado (para createdAt e updatedAt)
+    // Retorna a data e hora atual formatada (yyyy-MM-dd HH:mm:ss)
     private fun getCurrentTimestamp(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         return sdf.format(Date())
     }
 
-    // Exemplo simples de função para aplicar máscara de data no EditText
+    // Aplica uma máscara simples ao campo de data no formato dd/MM/yyyy
     private fun applyDateMask(editText: EditText) {
-        // Aqui você pode usar um TextWatcher para inserir "/" automaticamente
-        // Implementação simplificada para ideia:
         editText.addTextChangedListener(object : android.text.TextWatcher {
             var isUpdating = false
             val mask = "##/##/####"
