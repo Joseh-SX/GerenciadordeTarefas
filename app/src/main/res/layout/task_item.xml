@@ -1,26 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:orientation="horizontal"
+    android:padding="12dp">
 
     <TextView
-        android:id="@+id/txtTitle"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:id="@+id/txtTarefa"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Título - Data"
+        android:textSize="16sp"
+        android:layout_weight="1" />
 
-    <TextView
-        android:id="@+id/txtDueDate"
+
+    <Button
+        android:id="@+id/btnExcluir"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:text="✕"
         android:textSize="14sp"
-        android:textColor="#666666"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:background="?android:selectableItemBackgroundBorderless"
+        android:textColor="@android:color/darker_gray"
+        android:padding="0dp"
+        android:layout_margin="4dp"
+        android:gravity="center" />
 
-    <TextView
-        android:id="@+id/txtDescription"
-        android:textSize="14sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 </LinearLayout>

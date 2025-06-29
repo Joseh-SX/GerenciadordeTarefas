@@ -1,105 +1,151 @@
-// Define o pacote onde está essa classe, organizando o projeto
 package com.example.gerenciadordetarefas.data
 
-// Importa as bibliotecas necessárias para uso de banco de dados e manipulação de dados
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.content.ContentValues
 import android.database.Cursor
-
-// Importa o modelo de dados Task, que representa uma tarefa no sistema
 import com.example.gerenciadordetarefas.model.Task
 
 // Classe responsável por criar e gerenciar o banco de dados local SQLite
 class TaskDatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
-    // Constantes usadas para configurar o banco de dados
+    // Constantes usadas para configurar o banco de dados e nome das colunas
     companion object {
-        private const val DATABASE_NAME = "gerenciadordetarefas.db"     // Nome do arquivo do banco
-        private const val DATABASE_VERSION = 1                          // Versão do banco
-        private const val TABLE_NAME = "tasks"                          // Nome da tabela
-        private const val COL_ID = "id"                                 // Nome da coluna de ID
-        private const val COL_TITLE = "title"                           // Nome da coluna de título
-        private const val COL_DESCRIPTION = "description"            // Nome da coluna de descrição
-        private const val COL_DUE_DATE = "dueDate"              // Nome da coluna de data de entrega
+        private const val DATABASE_NAME = "gerenciadordetarefas.db"   // Nome do banco
+        private const val DATABASE_VERSION = 2                        // Versão do banco (aumentada)
+
+        private const val TABLE_NAME = "tasks"
+
+        // Colunas
+        private const val COL_ID = "id"
+        private const val COL_TITLE = "title"
+        private const val COL_DESCRIPTION = "description"
+        private const val COL_STATUS = "status"
+        private const val COL_PRIORITY = "priority"
+        private const val COL_DUE_DATE = "dueDate"
+        private const val COL_CREATED_AT = "createdAt"
+        private const val COL_UPDATED_AT = "updatedAt"
+        private const val COL_NOTES = "notes"
     }
 
-    // Função chamada automaticamente quando o banco é criado pela primeira vez
+    // Cria a tabela com os novos campos
     override fun onCreate(db: SQLiteDatabase) {
-        // Cria a tabela "tasks" com as colunas definidas
         val createTable = """
             CREATE TABLE $TABLE_NAME (
                 $COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                $COL_TITLE TEXT,
+                $COL_TITLE TEXT NOT NULL,
                 $COL_DESCRIPTION TEXT,
-                $COL_DUE_DATE TEXT
+                $COL_STATUS TEXT,
+                $COL_PRIORITY TEXT,
+                $COL_DUE_DATE TEXT,
+                $COL_CREATED_AT TEXT,
+                $COL_UPDATED_AT TEXT,
+                $COL_NOTES TEXT
             )
         """.trimIndent()
-        db.execSQL(createTable) // Executa o SQL para criar a tabela
+        db.execSQL(createTable)
     }
 
-    // Função chamada automaticamente quando a versão do banco é alterada
+    // Atualiza a estrutura do banco se a versão mudar
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        // Deleta a tabela existente (caso exista) e recria do zero
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME") // Apaga e recria
         onCreate(db)
     }
 
-    // =============================
-    // Funções CRUD (Create, Read, Update, Delete)
-    // =============================
-
-    // Adiciona uma nova tarefa no banco de dados
+    // Insere uma nova tarefa no banco
     fun addTask(task: Task): Long {
-        val db = this.writableDatabase                         // Acesso em modo escrita
-        val values = ContentValues()                           // Estrutura para armazenar os dados da nova tarefa
-        values.put(COL_TITLE, task.title)                      // Define o título
-        values.put(COL_DESCRIPTION, task.description)          // Define a descrição
-        values.put(COL_DUE_DATE, task.dueDate)                 // Define a data de entrega
-        return db.insert(TABLE_NAME, null, values)             // Insere no banco e retorna o ID da nova linha
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put(COL_TITLE, task.title)
+            put(COL_DESCRIPTION, task.description)
+            put(COL_STATUS, task.status)
+            put(COL_PRIORITY, task.priority)
+            put(COL_DUE_DATE, task.dueDate)
+            put(COL_CREATED_AT, task.createdAt)
+            put(COL_UPDATED_AT, task.updatedAt)
+            put(COL_NOTES, task.notes)
+        }
+        return db.insert(TABLE_NAME, null, values)
     }
 
-    // Retorna uma lista com todas as tarefas salvas no banco
+    // Retorna uma lista com todas as tarefas armazenadas
     fun getAllTasks(): List<Task> {
-        val taskList = mutableListOf<Task>()                   // Lista onde serão armazenadas as tarefas
-        val db = this.readableDatabase                         // Acesso em modo leitura
-        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)  // Executa consulta SQL
+        val taskList = mutableListOf<Task>()
+        val db = this.readableDatabase
+        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
 
-        // Verifica se há ao menos um resultado
         if (cursor.moveToFirst()) {
             do {
-                // Cria um objeto Task com os dados lidos do banco
                 val task = Task(
                     id = cursor.getInt(cursor.getColumnIndexOrThrow(COL_ID)),
                     title = cursor.getString(cursor.getColumnIndexOrThrow(COL_TITLE)),
                     description = cursor.getString(cursor.getColumnIndexOrThrow(COL_DESCRIPTION)),
-                    dueDate = cursor.getString(cursor.getColumnIndexOrThrow(COL_DUE_DATE))
+                    status = cursor.getString(cursor.getColumnIndexOrThrow(COL_STATUS)),
+                    priority = cursor.getString(cursor.getColumnIndexOrThrow(COL_PRIORITY)),
+                    dueDate = cursor.getString(cursor.getColumnIndexOrThrow(COL_DUE_DATE)),
+                    createdAt = cursor.getString(cursor.getColumnIndexOrThrow(COL_CREATED_AT)),
+                    updatedAt = cursor.getString(cursor.getColumnIndexOrThrow(COL_UPDATED_AT)),
+                    notes = cursor.getString(cursor.getColumnIndexOrThrow(COL_NOTES))
                 )
-                taskList.add(task)                             // Adiciona a tarefa na lista
-            } while (cursor.moveToNext())                      // Continua até o fim do resultado
+                taskList.add(task)
+            } while (cursor.moveToNext())
         }
 
-        cursor.close()                                         // Fecha o cursor (boa prática)
-        return taskList                                        // Retorna a lista de tarefas
+        cursor.close()
+        return taskList
     }
 
-    // Atualiza uma tarefa existente no banco de dados
+    fun getTaskById(id: Int): Task? {
+        val db = this.readableDatabase
+        val cursor = db.query(
+            TABLE_NAME,
+            null,
+            "$COL_ID = ?",
+            arrayOf(id.toString()),
+            null,
+            null,
+            null
+        )
+
+        var task: Task? = null
+        if (cursor.moveToFirst()) {
+            task = Task(
+                id = cursor.getInt(cursor.getColumnIndexOrThrow(COL_ID)),
+                title = cursor.getString(cursor.getColumnIndexOrThrow(COL_TITLE)),
+                description = cursor.getString(cursor.getColumnIndexOrThrow(COL_DESCRIPTION)),
+                status = cursor.getString(cursor.getColumnIndexOrThrow(COL_STATUS)),
+                priority = cursor.getString(cursor.getColumnIndexOrThrow(COL_PRIORITY)),
+                dueDate = cursor.getString(cursor.getColumnIndexOrThrow(COL_DUE_DATE)),
+                createdAt = cursor.getString(cursor.getColumnIndexOrThrow(COL_CREATED_AT)),
+                updatedAt = cursor.getString(cursor.getColumnIndexOrThrow(COL_UPDATED_AT)),
+                notes = cursor.getString(cursor.getColumnIndexOrThrow(COL_NOTES))
+            )
+        }
+
+        cursor.close()
+        return task
+    }
+
+    // Atualiza uma tarefa existente no banco
     fun updateTask(task: Task): Int {
-        val db = this.writableDatabase                         // Acesso em modo escrita
-        val values = ContentValues()
-        values.put(COL_TITLE, task.title)
-        values.put(COL_DESCRIPTION, task.description)
-        values.put(COL_DUE_DATE, task.dueDate)
-        // Atualiza a linha onde o id bate com o da tarefa passada
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put(COL_TITLE, task.title)
+            put(COL_DESCRIPTION, task.description)
+            put(COL_STATUS, task.status)
+            put(COL_PRIORITY, task.priority)
+            put(COL_DUE_DATE, task.dueDate)
+            put(COL_UPDATED_AT, task.updatedAt)
+            put(COL_NOTES, task.notes)
+        }
         return db.update(TABLE_NAME, values, "$COL_ID = ?", arrayOf(task.id.toString()))
     }
 
     // Deleta uma tarefa com base no ID
     fun deleteTask(id: Int): Int {
         val db = this.writableDatabase
-        // Apaga a linha da tabela onde o ID bate com o passado
         return db.delete(TABLE_NAME, "$COL_ID = ?", arrayOf(id.toString()))
     }
 }

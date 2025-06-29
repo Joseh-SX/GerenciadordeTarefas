@@ -1,69 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".MainActivity">
-
-    <TextView
-        android:id="@+id/textTitulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Minhas Tarefas"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
-
-    <!-- Lista de tarefas (temporária com TextViews fixos) -->
-    <ScrollView
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".MainActivity">
 
+        <TextView
+            android:id="@+id/textTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Minhas Tarefas"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Título - Prioridade(0-5) - Prazo" />
+
+        <!-- Lista de tarefas (temporária com TextViews fixos) -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerTarefas"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp"/>
+        </ScrollView>
+
+        <!-- Botões de ação -->
         <LinearLayout
-            android:id="@+id/listaTarefas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="horizontal"
+            android:gravity="end">
 
-            <TextView
+            <Button
+                android:id="@+id/btnConfig"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="• Estudar Kotlin - 25/06/2025"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"/>
+                android:text="Configurações"
+                android:layout_marginEnd="8dp"/>
 
-            <TextView
+            <Button
+                android:id="@+id/btnAdicionar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="• Fazer compras - 26/06/2025"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"/>
-
+                android:text="Adicionar" />
         </LinearLayout>
-    </ScrollView>
 
-    <!-- Botões de ação -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end">
-
-        <Button
-            android:id="@+id/btnConfig"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Configurações"
-            android:layout_marginEnd="8dp"/>
-
-        <Button
-            android:id="@+id/btnAdicionar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Adicionar" />
     </LinearLayout>
-
-</LinearLayout>
