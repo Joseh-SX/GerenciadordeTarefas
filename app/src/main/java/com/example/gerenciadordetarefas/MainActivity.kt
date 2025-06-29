@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gerenciadordetarefas.adapter.TaskAdapter
 import com.example.gerenciadordetarefas.data.TaskDatabaseHelper
 import com.example.gerenciadordetarefas.model.Task
+import androidx.appcompat.app.AppCompatDelegate
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +18,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dbHelper: TaskDatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // 1. Lê a preferência de modo escuro
+        val prefs = getSharedPreferences("config", MODE_PRIVATE)
+        val modoEscuroAtivado = prefs.getBoolean("modo_escuro", false)
+
+        // 2. Aplica o tema ANTES do setContentView
+        AppCompatDelegate.setDefaultNightMode(
+            if (modoEscuroAtivado) AppCompatDelegate.MODE_NIGHT_YES
+            else AppCompatDelegate.MODE_NIGHT_NO
+        )
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
