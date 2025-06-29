@@ -36,7 +36,10 @@ class MainActivity : AppCompatActivity() {
 
         // Ação do botão de configurações
         btnConfig.setOnClickListener {
-            Toast.makeText(this, "Botão Configurações clicado", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "Botão Configurações clicado", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ConfigActivity::class.java)
+            startActivity(intent)
+            
         }
 
         mostrarTarefas()
