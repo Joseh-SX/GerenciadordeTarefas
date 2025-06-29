@@ -1,61 +1,70 @@
 # Sistematização de PDM - Gerenciador de Tarefas
 
-Esse projeto foi desenvolvido para ser utilizado como um aplicativo móvel, compatível com o Android 6.0 (Marshmallow). Se trata de um gerenciador de tarefas, que possui as funções CRUD. A aplicação possui uma tela inicial onde são exibidas as tarefas adicionadas, uma tela para adicionar/editar uma nova tarefa, e uma tela de configurações que pode ser acessada pelo botão "configurações" na tela inicial. 
-Para adicionar uma nova tarefa, basta clicar no botão "adicionar", preencher os dados obrigatórios (nome da tarefa, prazo, prioridade) e clicar em salvar.
-Para deletar uma tarefa, basta clicar no "X" que fica diante da tarefa salva.
+Este projeto é um aplicativo móvel de gerenciamento de tarefas, compatível com Android 6.0 (Marshmallow), que implementa as operações básicas de um CRUD: **criar**, **ler**, **atualizar** e **excluir** tarefas.
 
-## Tecnologias utilizadas
+A aplicação possui três telas principais:
 
-A principal tecnologia utilizada para desenvolver esse sistema é a linguagem de programação Kotlin para criação do código/backend e o AndroidStudio para criação da interface do usuário/frontend. Como emulador, foi utilizado um aparelho celular com sistema operacional Android compatível com a versão 6.0, conectado ao computador com um cabo USB.
+- Uma **tela inicial**, onde são listadas todas as tarefas cadastradas;
+- Uma **tela de cadastro/edição**, usada para criar ou modificar tarefas;
+- Uma **tela de configurações**, acessível pelo botão "Configurações" na tela inicial.
 
-------------------------------------------------------------------
+---
 
-## Como utilizar o projeto
+### ⚙️ Funcionalidades
 
-Para utilizar esse projeto, é necessário criar um clone desse repositório em sua máquina local. O comando para criar o clone do projeto é o seguinte:
+- Para **adicionar** uma nova tarefa: clique no botão **"Adicionar"**, preencha os campos obrigatórios (nome, prazo e prioridade) e clique em **"Salvar"**.
+- Para **editar** uma tarefa: clique sobre ela na lista da tela inicial e modifique as informações desejadas.
+- Para **excluir** uma tarefa: clique no botão **"X"** ao lado da tarefa.
+- A tela de **configurações** permite personalizar algumas preferências do aplicativo.
 
-```bash[
-git clone https://github.com/LuizaSoaresDias/GerenciadordeTarefas.git
-```
+---
 
-Antes de fazer o clone, escolha o diretório onde deseja executá-lo.
+## 🛠️ Tecnologias Utilizadas
 
-### Como executar o projeto
+- **Kotlin** – linguagem utilizada no desenvolvimento do backend (lógica da aplicação)
+- **Android Studio** – ambiente de desenvolvimento e criação da interface (frontend)
+- **Emulador Android** ou **dispositivo real** com Android 6.0, conectado via USB para testes
 
-Após realizar o clone do projeto, entre nele e abra o projeto no Visual Studio Code (ou em outra IDE de sua preferência). Para executar este projeto, existem duas formas:
+---
 
- * A primeira forma é executar no arquivo "App.java" utilizando a Interface de execução de sua IDE;
- * A segunda forma é executar no terminal os seguintes comandos:
+## 👥 Autores
 
-```bash
-{Seu Diretório atual}\ cd bin
-```
+- Luiza Soares Dias  
+- José de Sousa Xavier
 
-```bash
-{Seu Diretório atual}\bin java App
-```
+---
 
-# 📲 Instalação
+## 📲 Instalação
 
-## ✅ Requisitos
+### ✅ Requisitos
 
-- Android Studio (recomendado: versão mais recente)
-- SDK do Android (API mínima compatível com o app)
-- Emulador ou dispositivo Android com depuração USB ativada
+- Android Studio (versão mais recente recomendada)  
+- SDK do Android (API mínima: 23 – Android 6.0)  
+- Emulador Android ou dispositivo físico com **depuração USB ativada**
 
-## 🚀 Passos para rodar o app
+### 🚀 Passos para rodar o app
 
 1. **Clone o repositório:**
 
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
+   git clone https://github.com/LuizaSoaresDias/GerenciadordeTarefas.git
+   
+2. **Abra o projeto no Android Studio**
 
-2.  **Abra o projeto no Android Studio:** Vá em File > Open e selecione a pasta do projeto.
+	Vá em **File > Open** e selecione a pasta do projeto.
 
-3.  **Aguarde o Gradle sincronizar.**(O Android Studio fará o download das dependências automaticamente.)
+3. **Aguarde o Gradle sincronizar**
 
-4.  **Conecte um dispositivo Android via USB no modo depuração USB ou use um emulador**.
+	O Android Studio fará o download das dependências automaticamente.
 
-5.  **Execute o app:** Clique no botão ▶️ Run ou pressione Shift + F10.
+4. **Conecte um dispositivo Android via USB**
 
-6.  **Alternativamente, você pode baixar o .apk e instalar em um smartphone android 6.0 ou superior.**
+	Certifique-se de que a **depuração USB** esteja ativada ou utilize um emulador.
+
+5. **Execute o app**
+
+	Clique no botão ▶️ **Run** ou pressione **Shift + F10**.
+
+6. **Alternativa**
+
+	Você também pode **baixar o `.apk`** e instalar em um smartphone com **Android 6.0 ou superior**.
