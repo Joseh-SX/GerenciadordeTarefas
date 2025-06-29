@@ -1,4 +1,4 @@
-# Sistematização de POO
+# Sistematização de PDM - Gerenciador de Tarefas
 
 Esse projeto foi desenvolvido para ser utilizado como um aplicativo móvel, compatível com o Android 6.0 (Marshmallow). Se trata de um gerenciador de tarefas, que possui as funções CRUD. A aplicação possui uma tela inicial onde são exibidas as tarefas adicionadas, uma tela para adicionar/editar uma nova tarefa, e uma tela de configurações que pode ser acessada pelo botão "configurações" na tela inicial. 
 Para adicionar uma nova tarefa, basta clicar no botão "adicionar", preencher os dados obrigatórios (nome da tarefa, prazo, prioridade) e clicar em salvar.
@@ -14,8 +14,8 @@ A principal tecnologia utilizada para desenvolver esse sistema é a linguagem de
 
 Para utilizar esse projeto, é necessário criar um clone desse repositório em sua máquina local. O comando para criar o clone do projeto é o seguinte:
 
-```bash
-git clone https://github.com/LuizaSoaresDias/sistematizacao-poo.git
+```bash[
+git clone https://github.com/LuizaSoaresDias/GerenciadordeTarefas.git
 ```
 
 Antes de fazer o clone, escolha o diretório onde deseja executá-lo.
