@@ -1,9 +1,22 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.GerenciadorDeTarefas" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
+<resources>
+    <style name="Theme.GerenciadorDeTarefas" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Cores principais -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
 
-    <style name="Theme.GerenciadorDeTarefas" parent="Base.Theme.GerenciadorDeTarefas" />
+        <!-- Fundo, status bar, nav bar -->
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
+
+        <!-- Superfície e texto -->
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/onSurface</item>
+
+        <!-- Erro -->
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/onError</item>
+    </style>
 </resources>

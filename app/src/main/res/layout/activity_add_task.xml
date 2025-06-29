@@ -1,35 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fontFamily="sans-serif">
 
-    <EditText
-        android:id="@+id/edtTitle"
-        android:hint="Título"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/edtDescription"
-        android:hint="Descrição"
+    <!-- Layout principal em coluna (vertical) -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
+        android:textSize="16sp"
+        android:fontFamily="sans-serif">
 
-    <EditText
-        android:id="@+id/edtDueDate"
-        android:hint="Prazo (ex: 2025-07-01)"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
 
-    <Button
-        android:id="@+id/btnSave"
-        android:text="Salvar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"/>
-</LinearLayout>
+        <!-- Campo para o título da tarefa -->
+        <EditText
+            android:id="@+id/edtTitle"
+            android:hint="Título"
+            android:layout_width="match_parent"
+            android:textSize="16sp"
+            android:layout_height="wrap_content"
+            />
+
+        <!-- Campo para a descrição da tarefa -->
+        <EditText
+            android:id="@+id/edtDescription"
+            android:hint="Descrição"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            />
+
+        <!-- Campo para o prazo da tarefa -->
+        <EditText
+            android:id="@+id/edtDueDate"
+            android:hint="Prazo (ex: 01 07 2025)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Selecione o status da tarefa:"
+            android:layout_marginTop="16dp"
+            />
+
+        <!-- Campo para o status da tarefa -->
+        <Spinner
+            android:id="@+id/spinnerStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp" />
+
+        <!-- Campo para a prioridade da tarefa -->
+        <TextView
+            android:id="@+id/textExplicacaoEstrelas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"
+            android:text="★ Prioridade: 1 (baixa) a 5 (alta)"
+            />
+
+        <RatingBar
+            android:id="@+id/ratingBarPriority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:numStars="5"
+            android:rating="0"
+            android:stepSize="1"
+            android:isIndicator="false"
+            />
+
+        <!-- Campo para observações adicionais -->
+        <EditText
+            android:id="@+id/edtNotes"
+            android:hint="Observações"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            />
+
+        <!-- Botão para salvar a tarefa -->
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"
+            android:text="Salvar"
+            />
+    </LinearLayout>
+</ScrollView>

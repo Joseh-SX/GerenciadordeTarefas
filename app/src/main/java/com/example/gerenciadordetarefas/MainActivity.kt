@@ -1,71 +1,79 @@
-// Pacote onde essa classe está localizada
 package com.example.gerenciadordetarefas
 
-// Importações necessárias
-import android.os.Bundle // Gerencia o ciclo de vida da atividade
-import android.widget.Button // Representa os botões na interface
-import androidx.appcompat.app.AppCompatActivity // Classe base para atividades modernas com suporte a ActionBar
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast // Exibe mensagens rápidas na tela (notificações curtas)
 import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.gerenciadordetarefas.adapter.TaskAdapter
 import com.example.gerenciadordetarefas.data.TaskDatabaseHelper
 import com.example.gerenciadordetarefas.model.Task
 
-class MainActivity : AppCompatActivity() { // Define a classe da atividade principal
-    private lateinit var listaTarefasLayout: LinearLayout
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var recyclerTarefas: RecyclerView
     private lateinit var dbHelper: TaskDatabaseHelper
 
-    override fun onCreate(savedInstanceState: Bundle?) { // Método chamado ao criar a activity
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Inicializa o banco de dados
-        dbHelper = TaskDatabaseHelper(this)
+        recyclerTarefas = findViewById(R.id.recyclerTarefas)
+        recyclerTarefas.layoutManager = LinearLayoutManager(this)
 
-        // Referência para o LinearLayout onde as tarefas vão aparecer
-        listaTarefasLayout = findViewById(R.id.listaTarefas)
+        dbHelper = TaskDatabaseHelper(this)
 
         val btnAdicionar = findViewById<Button>(R.id.btnAdicionar)
         val btnConfig = findViewById<Button>(R.id.btnConfig)
 
-        // Atualiza a lista exibida toda vez que a activity é criada
-        mostrarTarefas()
-
+        // Abrir tela para adicionar nova tarefa
         btnAdicionar.setOnClickListener {
             val intent = Intent(this, AddTaskActivity::class.java)
             startActivity(intent)
         }
 
+        // Ação do botão de configurações
         btnConfig.setOnClickListener {
             // Toast.makeText(this, "Botão Configurações clicado", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, ConfigActivity::class.java)
             startActivity(intent)
             
         }
+
+        mostrarTarefas()
     }
 
-    // Método para atualizar a lista de tarefas na tela
     private fun mostrarTarefas() {
-        listaTarefasLayout.removeAllViews() // Limpa as tarefas atuais para atualizar
+        val tarefas: List<Task> = dbHelper.getAllTasks()
 
-        // Busca todas as tarefas no banco
-        val tarefas = dbHelper.getAllTasks()
-
-        // Para cada tarefa, cria um TextView e adiciona no LinearLayout
-        for (tarefa in tarefas) {
-            val tarefaView = TextView(this).apply {
-                text = "• ${tarefa.title} - ${tarefa.dueDate}"
-                textSize = 16f
-                setPadding(0, 0, 0, 16)
+        val adapter = TaskAdapter(
+            context = this,
+            taskList = tarefas,
+            onItemClick = { tarefa ->
+                // Ao clicar na tarefa, abre a tela de edição
+                val intent = Intent(this, AddTaskActivity::class.java)
+                intent.putExtra("taskId", tarefa.id)
+                startActivity(intent)
+            },
+            onExcluir = { tarefa ->
+                // Ao clicar em excluir
+                val resultado = dbHelper.deleteTask(tarefa.id)
+                if (resultado > 0) {
+                    Toast.makeText(this, "Tarefa excluída", Toast.LENGTH_SHORT).show()
+                    mostrarTarefas()
+                } else {
+                    Toast.makeText(this, "Erro ao excluir", Toast.LENGTH_SHORT).show()
+                }
             }
-            listaTarefasLayout.addView(tarefaView)
-        }
+        )
+
+        recyclerTarefas.adapter = adapter
     }
 
     override fun onResume() {
         super.onResume()
-        // Atualiza a lista sempre que volta para essa activity (ex: após adicionar tarefa)
         mostrarTarefas()
     }
 }

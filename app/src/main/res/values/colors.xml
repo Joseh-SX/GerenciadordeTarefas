@@ -1,5 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Cores para tema claro -->
+    <color name="colorPrimary">#2563EB</color>          <!-- Azul médio -->
+    <color name="colorOnPrimary">#FFFFFF</color>        <!-- Branco para texto sobre primary -->
+    <color name="colorSecondary">#10B981</color>        <!-- Verde -->
+    <color name="colorOnSecondary">#FFFFFF</color>
+
+    <color name="background">#FFFFFF</color>            <!-- Fundo claro -->
+    <color name="onBackground">#1F2937</color>          <!-- Texto escuro -->
+
+    <color name="surface">#F9FAFB</color>               <!-- Cartões claros -->
+    <color name="onSurface">#111827</color>
+    <color name="error">#B00020</color>
+    <color name="onError">#FFFFFF</color>
+
+    <!-- Cores para tema escuro (pode ficar aqui ou num colors-night.xml) -->
+    <color name="colorPrimaryDark">#60A5FA</color>       <!-- Azul claro -->
+    <color name="colorOnPrimaryDark">#0F172A</color>
+    <color name="colorSecondaryDark">#34D399</color>     <!-- Verde claro -->
+    <color name="colorOnSecondaryDark">#0F172A</color>
+
+    <color name="backgroundDark">#111827</color>         <!-- Fundo escuro -->
+    <color name="onBackgroundDark">#F9FAFB</color>       <!-- Texto claro -->
+
+    <color name="surfaceDark">#1F2937</color>            <!-- Cartões escuros -->
+    <color name="onSurfaceDark">#E5E7EB</color>
+    <color name="errorDark">#F87171</color>
+    <color name="onErrorDark">#1C1C1C</color>
 </resources>
