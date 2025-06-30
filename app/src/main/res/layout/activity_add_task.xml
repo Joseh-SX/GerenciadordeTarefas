@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:textSize="16sp"
-            android:text="★ Prioridade: 1 (baixa) a 5 (alta)"
+            android:text="★ Prioridade: 0 (baixa) a 5 (alta)"
             />
 
         <RatingBar
